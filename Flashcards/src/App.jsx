@@ -86,12 +86,6 @@ function App() {
     setCount(randomNum);
   };
 
-  // const countDown = () => {
-  //   if (count <= 0) {
-  //     setCount(quotesInfo.length - 1);
-  //   } else setCount(count - 1);
-  // };
-
   return (
     <div>
       <Title />
