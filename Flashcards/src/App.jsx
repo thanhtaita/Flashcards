@@ -70,6 +70,24 @@ function App() {
     },
   ];
 
+  const [indexes, setIndexes] = useState(
+    [...Array(quotesInfo.length)].map((_, index) => index)
+  );
+
+  const [textInput, setTextInput] = useState("");
+
+  const shuffleCards = () => {
+    const arr = [];
+    const length = quotesInfo.length;
+    while (arr.length < length) {
+      const num = Math.floor(Math.random() * length);
+      if (!arr.includes(num)) {
+        arr.push(num);
+      }
+    }
+    setIndexes(arr);
+  };
+
   // document.addEventListener("DOMContentLoaded", function () {
   //   let flipCard = document.getElementById("arrow-back");
   //   let authorQuotePair = document.querySelector(".author-quote-pair");
@@ -79,32 +97,76 @@ function App() {
   // });
 
   const countUp = () => {
-    let randomNum = Math.floor(Math.random() * quotesInfo.length);
-    while (randomNum == count) {
-      randomNum = Math.floor(Math.random() * quotesInfo.length);
+    if (count == quotesInfo.length - 1) setCount(0);
+    else setCount(count + 1);
+  };
+
+  const countDown = () => {
+    if (count == 0) setCount(0);
+    else setCount(count - 1);
+  };
+
+  const [correction, setCorrection] = useState("");
+  const [streak, setStreak] = useState(0);
+  const [longestStreak, setLongestStreak] = useState(0);
+  let correctColor = document.querySelector(".textinput");
+  const checkCorrect = () => {
+    if (
+      textInput.toLowerCase() == quotesInfo[indexes[count]].author.toLowerCase()
+    ) {
+      setCorrection("correct");
+      setStreak(streak + 1);
+      correctColor.style.border = "0.2rem solid green";
+    } else {
+      setCorrection("wrong");
+      if (streak > longestStreak) setLongestStreak(streak);
+      setStreak(0);
+      correctColor.style.border = "0.2rem solid red";
     }
-    setCount(randomNum);
   };
 
   return (
     <div>
       <Title />
       <h3 className="numCards">Number of cards: {quotesInfo.length}</h3>
+      <div className="streak-container">
+        <p className="streak">Streak: {streak}</p>
+        <p className="longestStreak">Longest Streak: {longestStreak}</p>
+      </div>
+
       <div className="content">
-        <button id="arrow-back" className="arrow">
+        <button id="arrow-back" className="arrow" onClick={countDown}>
           &#8592;
         </button>
         <div className="flip-card">
           <div className="author-quote-pair">
-            <Quote quote={quotesInfo[count].quote} />
+            <Quote quote={quotesInfo[indexes[count]].quote} />
             <Author
-              author={quotesInfo[count].author}
-              pic={quotesInfo[count].pic}
+              author={quotesInfo[indexes[count]].author}
+              pic={quotesInfo[indexes[count]].pic}
             />
           </div>
         </div>
         <button className="arrow" onClick={countUp}>
           &#8594;
+        </button>
+      </div>
+      <div className="form-container">
+        <form className="input">
+          <p>Enter your answer:</p>
+          <input
+            className="textinput"
+            type="text"
+            value={textInput}
+            onChange={(e) => setTextInput(e.target.value)}
+          />
+          {/* <input className="submit" type="submit" onClick={checkCorrect} /> */}
+        </form>
+        <button className="submit" onClick={checkCorrect}>
+          Submit
+        </button>
+        <button className="shuffle-btn" onClick={shuffleCards}>
+          Shuffle
         </button>
       </div>
     </div>

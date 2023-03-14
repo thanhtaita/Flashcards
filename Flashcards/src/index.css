@@ -86,3 +86,46 @@
   width: 15rem;
   border-radius: 0.5rem;
 }
+
+.streak-container {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  margin-top: -1rem;
+}
+
+form {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  /* margin-top: -3rem; */
+}
+
+.input {
+  display: flex;
+  align-items: center;
+}
+input {
+  border-radius: 0.2rem;
+  border: 0;
+  height: 2rem;
+}
+
+.textinput {
+  background-color: rgba(226, 226, 226, 0.449);
+}
+
+.submit,
+.shuffle-btn {
+  background-color: rgba(255, 255, 255, 0);
+  border-radius: 0.2rem;
+  border: 0;
+}
+
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: -3rem;
+}
